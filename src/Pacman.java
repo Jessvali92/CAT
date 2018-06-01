@@ -180,7 +180,7 @@ public class Pacman {
 	private static void leeRanking() {
 		// TODO Auto-generated method stub
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(new File("C:/Users/Qukita/Desktop/ranking.txt")));
+			BufferedReader in = new BufferedReader(new FileReader(new File("ranking.txt")));
 			while (in.ready()) {
 				String entrada = in.readLine();
 				String aen[] = entrada.split(" ");
@@ -205,7 +205,7 @@ public class Pacman {
 		EntradaRanking rank = new EntradaRanking(nom, punts);
 		ranking.add(rank);
 		Collections.sort(ranking);
-		File f = new File("C:/Users/Qukita/Desktop/ranking.txt");
+		File f = new File("ranking.txt");
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(f));
 			for (EntradaRanking er : ranking) {
@@ -226,7 +226,7 @@ public class Pacman {
 	public static void saveGame() {
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream("C:/Users/Qukita/Desktop/save.sav");
+			fos = new FileOutputStream("save.sav");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(Pacman.mapa);
 			oos.writeObject(listf);
@@ -242,7 +242,7 @@ public class Pacman {
 	public static void loadGame() {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream("C:/Users/Qukita/Desktop/save.sav");
+			fis = new FileInputStream("save.sav");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			while(true) {
 				
