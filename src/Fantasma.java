@@ -53,52 +53,14 @@ public class Fantasma implements Serializable{
 	Integer[] posicionActual;
 	private int nuevoMov=1;
 	private boolean nuevoActivo=false;
+
 	private boolean primeraVez=true;
 	private boolean vectorEncontrado=false;
 	static int rX=0;
 	static int rY=0;
 	private boolean correcto;
-	ArrayList<Integer> path = new ArrayList<Integer>();
-	
-	int maze[][] = {
-
-			{1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1},
-			{1,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	2,	1,	1,	3,	0,	0,	0,	0,	0,	4,	0,	0,	0,	0,	5,	1},
-			{1,	0,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-			{1,	2,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	2,	1},
-			{1,	0,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-			{1,	6,	0,	0,	0,	0,	7,	0,	0,	8,	0,	0,	9,	0,	0,	10,	0,	0,	11,	0,	0,	12,	0,	0,	0,	0,	13,	1},
-			{1,	0,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-			{1,	0,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-			{1,	14,	0,	0,	0,	0,	15,	1,	1,	16,	0,	0,	17,	1,	1,	18,	0,	0,	19,	1,	1,	20,	0,	0,	0,	0,	21,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	22,	0,	0,	23,	33,	33,	24,	0,	0,	25,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	3,	3,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	20,	20,	20,	20,	20,	20,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	0,	0,	0,	0,	0,	26,	0,	0,	27,	1,	20,	20,	20,	20,	20,	20,	1,	28,	0,	0,	29,	0,	0,	0,	0,	0,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	20,	20,	20,	20,	20,	20,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	30,	0,	0,	0,	0,	0,	0,	0,	0,	31,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-			{1,	32,	0,	0,	0,	0,	33,	0,	0,	34,	0,	0,	35,	1,	1,	36,	0,	0,	37,	0,	0,	38,	0,	0,	0,	0,	39,	1},
-			{1,	0,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-			{1,	2,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	2,	1},
-			{1,	40,	0,	41,	1,	1,	42,	0,	0,	43,	0,	0,	44,	0,	0,	45,	0,	0,	46,	0,	0,	47,	1,	1,	48,	0,	49,	1},
-			{1,	1,	1,	0,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	0,	1,	1,	1},
-			{1,	1,	1,	0,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	0,	1,	1,	1},
-			{1,	50,	0,	51,	0,	0,	52,	1,	1,	53,	0,	0,	54,	1,	1,	55,	0,	0,	56,	1,	1,	57,	0,	0,	58,	0,	59,	1},
-			{1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1},
-			{1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1},
-			{1,	60,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	61,	0,	0,	62,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	63,	1},
-			{1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1},
-
-	};
-	
-	
-	
-	
+	ArrayList<Integer> path = new ArrayList<Integer>();	
+	private boolean siguiendo = true;
 	
 	public int getPositionHomeX() {
 		return positionHomeX;
@@ -133,7 +95,6 @@ public class Fantasma implements Serializable{
 		this.color = color;
 		
 	}
-	
 	
 
 	public Boolean getEat() {
@@ -202,12 +163,25 @@ public class Fantasma implements Serializable{
 		this.die = die;
 	}
 
+	
+	//********************************************************************
+	
 	public void hazLoTuyo(Catman c) {
 			this.know(c);
 			if (step) {
 				this.firstMoveFantasmas(c);
-			}else if (returningHome==false){
+			}else if ((returningHome==false&&this.color==FantasmasFirstMove.PINK)||
+					(returningHome==false&&this.color==FantasmasFirstMove.YELLOW)||
+					(returningHome==false&&this.color==FantasmasFirstMove.BLUE)||
+					(this.getDie()&&returningHome==false)){
+			
+				nuevoActivo=false;
 				this.move(c);				
+			
+			}else if (siguiendo==true&&!this.getEat()){
+				seguirCatman(c);	
+				
+			
 			}else {
 				this.returnHome(c);//mover volviendo
 				if (this.posX==positionHomeX&&this.posY==positionHomeY) {
@@ -221,7 +195,10 @@ public class Fantasma implements Serializable{
 				
 			}
 			this.know(c);
-	}	
+	}
+	
+	//*********************************************************************
+	
 	
 	private void firstMoveFantasmas(Catman c) {
 		//comprobar que hayan salido de la casa
@@ -364,14 +341,6 @@ public class Fantasma implements Serializable{
 			}
 		}
 	}
-	
-	
-
-	
-
-	
-
-	
 
 	private void move(Catman c) {
 		movDone = false;
@@ -391,7 +360,7 @@ public class Fantasma implements Serializable{
 					this.operaPos("+", "x");
 					//lastNumber = Pacman.mapa[this.getPosX()][this.getPosY()];
 					// DEATH
-					if (this.getPosX() == c.getpacx() && this.getPosY() == c.getpacy()) {
+					if (this.getPosX() == c.getpacx() && this.getPosY() == c.getpacy() && this.getDie()) {
 						this.setEat(true);
 					
 					}if (this.getDie()==true&&this.getEat()==false) {
@@ -408,10 +377,10 @@ public class Fantasma implements Serializable{
 						
 						MapaFantasmas.mapaF[this.getPosX()][this.getPosY()] = imgAB;
 						this.setMovDone(true);
-					} /*else {
-						this.setMovDone(true);*/
+					} else {
+						this.setMovDone(true);
 
-					/*}*/
+					}
 				}
 
 				break;
@@ -422,7 +391,7 @@ public class Fantasma implements Serializable{
 					this.operaPos("-", "x");
 					//lastNumber = Pacman.mapa[this.getPosX()][this.getPosY()];
 					// DEATH
-					if (this.getPosX() == c.getpacx() && this.getPosY() == c.getpacy()) {
+					if (this.getPosX() == c.getpacx() && this.getPosY() == c.getpacy() && this.getDie()) {
 						this.setEat(true);
 					}if (this.getDie()==true&&this.getEat()==false) {
 						MapaFantasmas.mapaF[this.getPosX()][this.getPosY()] = 28;//panic
@@ -436,10 +405,10 @@ public class Fantasma implements Serializable{
 					} else if (this.getDie() == false&&this.getEat()==false) {
 						MapaFantasmas.mapaF[this.getPosX()][this.getPosY()] = imgAR;
 						this.setMovDone(true);
-					} /*else {
+					} else {
 						this.setMovDone(true);
 
-					}*/
+					}
 				}
 
 				break;
@@ -453,7 +422,7 @@ public class Fantasma implements Serializable{
 					//lastNumber = Pacman.mapa[this.getPosX()][this.getPosY()];
 					// DEATH
 					// DEATH
-					if (this.getPosX() == c.getpacx() && this.getPosY() == c.getpacy()) {
+					if (this.getPosX() == c.getpacx() && this.getPosY() == c.getpacy() && this.getDie()) {
 						this.setEat(true);
 					}if (this.getDie()==true&&this.getEat()==false) {
 						MapaFantasmas.mapaF[this.getPosX()][this.getPosY()] = 28;//panic
@@ -468,9 +437,9 @@ public class Fantasma implements Serializable{
 						MapaFantasmas.mapaF[this.getPosX()][this.getPosY()] = imgI;
 						this.setMovDone(true);
 
-					} /*else {
+					} else {
 						this.setMovDone(true);
-					}*/
+					}
 				}
 
 				break;
@@ -483,7 +452,7 @@ public class Fantasma implements Serializable{
 					this.operaPos("+", "y");
 					//lastNumber = Pacman.mapa[this.getPosX()][this.getPosY()];
 					// DEATH
-					if (this.getPosX() == c.getpacx() && this.getPosY() == c.getpacy()) {
+					if (this.getPosX() == c.getpacx() && this.getPosY() == c.getpacy() && this.getDie()) {
 						this.setEat(true);
 					}if (this.getDie()==true&&this.getEat()==false) {
 						MapaFantasmas.mapaF[this.getPosX()][this.getPosY()] = 28;//panic
@@ -496,9 +465,9 @@ public class Fantasma implements Serializable{
 					} else if (this.getDie() == false&&this.getEat()==false) {
 						MapaFantasmas.mapaF[this.getPosX()][this.getPosY()] = imgD;
 						this.setMovDone(true);
-					} /*else {
+					} else {
 						this.setMovDone(true);
-					}*/
+					}
 				}
 				break;
 			}
@@ -604,9 +573,6 @@ public class Fantasma implements Serializable{
 		}
 	}
 	
-	private void seguir(Catman c) {
-		
-	}
 	
 	private void seguirCatman(Catman c) {
 		int resultY=0;
@@ -639,8 +605,8 @@ public class Fantasma implements Serializable{
 			System.out.println("right");
 			//nuevoMov=4;
 		}
-		resultX = Math.abs(positionHomeX-this.posX);
-		resultY = Math.abs(positionHomeY-this.posY);
+		resultX = Math.abs(c.getpacx()-this.posX);
+		resultY = Math.abs(c.getpacy()-this.posY);
 		boolean buscandoVertice=true;
 		//esquinas y pasillos
 		if (mov==2) {
@@ -658,7 +624,7 @@ public class Fantasma implements Serializable{
 			//no se cual es el MOV anterior
 			if (buscandoVertice) {
 				if (left&&right)       {
-					if (this.posY > positionHomeY) {
+					if (this.posY > c.getpacy()) {
 						nuevoMov=3;
 						
 					}else {
@@ -666,11 +632,12 @@ public class Fantasma implements Serializable{
 						
 					}
 				}else if (left&&up)    {
-					if (this.posX > positionHomeX) {
+					if (resultX>=resultY) {
 						nuevoMov=2;
 						
 					}else {
-						nuevoMov=1;
+						nuevoMov=3;
+						
 					}
 				}else if (left&&down)  {
 					if (resultX>=resultY) {
@@ -683,10 +650,8 @@ public class Fantasma implements Serializable{
 				}else if (right&&down) {
 					if (resultX>=resultY) {
 						nuevoMov=1;
-						
 					}else {
 						nuevoMov=4;
-						
 					}						
 				}else if (right&&up)   {
 					
@@ -698,7 +663,7 @@ public class Fantasma implements Serializable{
 						
 					}
 				}else if (up&&down)    {
-					if (this.posX > positionHomeX) {
+					if (this.posX > c.getpacx()) {
 						nuevoMov=2;
 						
 					}else {
@@ -712,17 +677,17 @@ public class Fantasma implements Serializable{
 				move(Pacman.player1);
 			}
 		}else if (mov==3) {
-			if(resultY>=resultX) {					
-				if (this.posY > positionHomeY) {
+			if(resultY>=resultX) { //horizontal					
+				if (this.posY > c.getpacy()) {
 					if (left) {
 						nuevoMov=3;
 					}else {
 						if (up) {
 							nuevoMov=2;
-						}else if (right) {
-							nuevoMov=4;
 						}else if (down) {
 							nuevoMov=1;
+						}else if (right) {
+							nuevoMov=4;
 						}
 					}
 				}else {
@@ -736,8 +701,8 @@ public class Fantasma implements Serializable{
 						nuevoMov=1;
 					}
 				}
-			}else {
-				if (this.posX > positionHomeX) {
+			}else {  //vertical
+				if (this.posX > c.getpacx()) {
 					if (up) {
 						nuevoMov=2;
 					}else if (left) {
@@ -763,13 +728,13 @@ public class Fantasma implements Serializable{
 			move(Pacman.player1);
 		}else if (mov==4) {
 			if(resultY>=resultX) {
-				if (positionHomeY>this.posY) {
+				if (c.getpacy()>this.posY) {
 					nuevoMov=4;
 				}else {
 					nuevoMov=3;
 				}
 			}else {
-				if (positionHomeX>this.posX) {
+				if (c.getpacx()>this.posX) {
 					nuevoMov=1;
 				}else {
 					nuevoMov=2;
@@ -839,11 +804,12 @@ public class Fantasma implements Serializable{
 						
 					}
 				}else if (left&&up)    {
-					if (this.posX > positionHomeX) {
+					if (resultX>=resultY) {
 						nuevoMov=2;
 						
 					}else {
-						nuevoMov=1;
+						nuevoMov=3;
+						
 					}
 				}else if (left&&down)  {
 					if (resultX>=resultY) {
