@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Catman implements Serializable{
 
@@ -61,7 +62,7 @@ public class Catman implements Serializable{
 		this.movePacman();
 		this.teleport();
 		this.doStuffcomprobarB();
-		//this.frutaPacman();
+		this.frutaPacman();
 	}
 	
 	private void teleport() {
@@ -84,11 +85,31 @@ public class Catman implements Serializable{
 		}
 	}
 	
-	/*private void frutaPacman() {
-		
+	private void frutaPacman() {
+		if(!Fantasma.frutas.isEmpty()) {
+			boolean encontrado = false;
+			int posicionfruta=0;
+			int contador=0;
+			for (ArrayList<Integer> fruta : Fantasma.frutas) {	
+				fruta.get(0);
+				fruta.get(1);
+				System.out.println("Recorriendo frutas");
+				if (pacx==fruta.get(0) && pacy==fruta.get(1)) {
+					puntos+=500;
+					encontrado=true;
+					posicionfruta=contador;
+					
+				}	
+				contador++;
+			}
+			if(encontrado) {
+				Fantasma.frutas.remove(posicionfruta);
+			}
+
+		}
 		//comprobar que se haya comido la fruta y sumar los puntos extras
 		
-	}*/
+	}
 	
 	
 	private void movePacman() {		
@@ -153,7 +174,7 @@ public class Catman implements Serializable{
 				
 			}
 			desactivar3x1y = false;
-			puntos=puntos+9;
+			puntos=puntos+499;
 			
 		}else if ( Pacman.mapa[pacx][pacy]==Pacman.mapa[3][26]&&desactivar3x26y) {
 			comebola=true;
@@ -161,7 +182,7 @@ public class Catman implements Serializable{
 				f.setDie(true);
 			}
 			desactivar3x26y = false;
-			puntos=puntos+9;
+			puntos=puntos+499;
 			
 		}else if( Pacman.mapa[pacx][pacy]==Pacman.mapa[22][1]&&desactivar23x1y) {
 			comebola=true;
@@ -169,14 +190,14 @@ public class Catman implements Serializable{
 				f.setDie(true);
 			}
 			desactivar23x1y = false;
-			puntos=puntos+9;
+			puntos=puntos+499;
 		}else if (Pacman.mapa[pacx][pacy]==Pacman.mapa[22][26]&&desactivar23x26y) {
 			comebola=true;
 			for(Fantasma f : Pacman.listf) {
 				f.setDie(true);
 			}
 			desactivar23x26y = false;
-			puntos=puntos+9;
+			puntos=puntos+499;
 		}
 	}
 	

@@ -34,7 +34,7 @@ public class Finestra extends JFrame {
 	private Taulell taulell;
 	private Taulell taulell2;
 	private boolean segontaulell=false;
-	private boolean actetiquetes = false;
+	private boolean actetiquetes = false; 
 	private boolean etiquetadebug = false;
 	private String[] etiquetes = { "" };
 	/// pots posar tantes etiquetes com vulguis eh, no estàs limitat a 3.
@@ -82,7 +82,7 @@ public class Finestra extends JFrame {
 
 		setSize(650, 700);
 		setResizable(false);
-		setLocation(100, 100);
+		setLocation(160, 150);
 		setVisible(true);
 		taulell.addComponentListener(taulell.cl);
 		

@@ -132,7 +132,7 @@ public class Taulell extends JPanel {
 			for (int i = 0; i < FILES; i++) {
 				for (int j = 0; j < COLS; j++) {
 					squares[i][j].draw(g2, a[i][j], actcolors, colors, actborde, borde, fons, actlletres, lletres,
-							colorlletres, actimatges, imatges, actimgbackground, actfreedraw, freedrawx, freedrawy);
+							colorlletres, actimatges, imatges, actimgbackground, actfreedraw, freedrawx, freedrawy); 
 				}
 			}
 			if (actoverdraw) {

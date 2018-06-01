@@ -18,6 +18,8 @@ public class Fantasma implements Serializable{
 	/**
 	 * 
 	 */
+	private int guarda1;
+	private int guarda2;
 	private Integer posX;
 	private Integer posY;
 	private Boolean movDone = false;
@@ -53,14 +55,29 @@ public class Fantasma implements Serializable{
 	Integer[] posicionActual;
 	private int nuevoMov=1;
 	private boolean nuevoActivo=false;
-
-	private boolean primeraVez=true;
-	private boolean vectorEncontrado=false;
+	static ArrayList<ArrayList<Integer>> frutas = new ArrayList<ArrayList<Integer>>();	
 	static int rX=0;
 	static int rY=0;
 	private boolean correcto;
 	ArrayList<Integer> path = new ArrayList<Integer>();	
 	private boolean siguiendo = true;
+	
+	public int getGuarda() {
+		return guarda1;
+	}
+
+	public void setGuarda(int guarda1) {
+		this.guarda1 = guarda1;
+	}
+	
+	
+	public int getGuarda2() {
+		return guarda2;
+	}
+
+	public void setGuarda2(int guarda2) {
+		this.guarda2 = guarda2;
+	}
 	
 	public int getPositionHomeX() {
 		return positionHomeX;
@@ -309,6 +326,11 @@ public class Fantasma implements Serializable{
 			rX = (int) (Math.random() * 25) + 1;
 			rY = (int) (Math.random() * 25) + 1;
 			if (Pacman.mapa[rX][rY]==0) {
+				ArrayList<Integer> posiciones = new ArrayList<Integer>();
+				posiciones.add(rX);
+				posiciones.add(rY);
+				frutas.add(posiciones);
+				
 				correcto=true;
 			}
 		}
@@ -586,23 +608,23 @@ public class Fantasma implements Serializable{
 		if (Pacman.mapa[this.getPosX() + 1][this.getPosY()] != 1&&Pacman.mapa[this.getPosX() + 1][this.getPosY()] != 22) { // DOWN MOV
 			mov++;
 			down=true;
-			System.out.println("down");
+			
 			//nuevoMov=1;
 		}if (Pacman.mapa[this.getPosX() - 1][this.getPosY()] != 1) {// UP
 			mov++;
 			up=true;
-			System.out.println("up");
+			
 			//nuevoMov=2;
 		}
 		if (Pacman.mapa[this.getPosX()][this.getPosY() - 1] != 1) {//left
 			mov++;
 			left=true;
-			System.out.println("left");
+			
 			//nuevoMov=3;
 		}if (Pacman.mapa[this.getPosX()][this.getPosY() + 1] != 1) {//right
 			mov++;
 			right=true;
-			System.out.println("right");
+			
 			//nuevoMov=4;
 		}
 		resultX = Math.abs(c.getpacx()-this.posX);
@@ -758,23 +780,23 @@ public class Fantasma implements Serializable{
 		if (Pacman.mapa[this.getPosX() + 1][this.getPosY()] != 1&&Pacman.mapa[this.getPosX() + 1][this.getPosY()] != 22) { // DOWN MOV
 			mov++;
 			down=true;
-			System.out.println("down");
+			
 			//nuevoMov=1;
 		}if (Pacman.mapa[this.getPosX() - 1][this.getPosY()] != 1) {// UP
 			mov++;
 			up=true;
-			System.out.println("up");
+			
 			//nuevoMov=2;
 		}
 		if (Pacman.mapa[this.getPosX()][this.getPosY() - 1] != 1) {//left
 			mov++;
 			left=true;
-			System.out.println("left");
+			
 			//nuevoMov=3;
 		}if (Pacman.mapa[this.getPosX()][this.getPosY() + 1] != 1) {//right
 			mov++;
 			right=true;
-			System.out.println("right");
+			
 			//nuevoMov=4;
 		}
 		resultX = Math.abs(positionHomeX-this.posX);
@@ -920,131 +942,8 @@ public class Fantasma implements Serializable{
 		}
 	
 	}
-	public void noDijkstra(Catman c) {		
-		/*
-		 * 
-		 * 		/*System.out.println(mov);
-				// estamos en un vertice				
-				if (resultX > resultY) {
-					// mov vertical
-					if (this.posX > positionHomeX) {
-						// mov arriba
-						nuevoMov = 2;
-					} else {
-						// mov abajo
-						nuevoMov = 1;
-					}
-				} else {
-					// mov horizontal
-					if (this.posY > positionHomeY) {
-						// mov izq
-						nuevoMov = 3;
-					} else {
-						// mov der
-						nuevoMov = 4;
-					}
-				}
-			}
-		 * 
-		 * 
-		 * 
-		 * if (mov>=3) {//vertice mirar el lado mas lejos
-			System.out.println("vertice"); 
-			//TODO 4 banderas diferentes para result Y
-			
-		}else {
-			System.out.println("no vertice");
-			nuevoActivo=true;
-			//moverse al mas cercano de x o Y hasta llegar a vertice
-			if (primeraVez) {
-				if (resultY>=resultX) {//quieres ir derecha o izquierda
-					if (left&&positionHomeY>resultY) {
-						nuevoMov=3;
-					}if (right&&positionHomeY>resultY) {
-						nuevoMov=4;
-					}
-				}else if (resultY<=resultX){
-					if (up&&positionHomeX>resultX) {
-						nuevoMov=2;
-					}if (down&&positionHomeX<resultX) {
-						nuevoMov=1;
-					}
-				}
-				primeraVez=false;
-			}else {
-				if (left) {
-					nuevoMov=3;
-				}else if (right) {
-					nuevoMov=4;
-				}else if (up) {
-					nuevoMov=2;
-				}else {
-					nuevoMov=1;
-				}
-				
-			}
-			move(c);
-			System.out.println("se movio hacia: "+nuevoMov);
-		}*/	
-	}
-	
-	
-	private int traductor(int x, int y) {
-		
-		int numeroVortice;
-		
-		int mapa[][] = {
 
-				{1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1},
-				{1,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	2,	1,	1,	3,	0,	0,	0,	0,	0,	4,	0,	0,	0,	0,	5,	1},
-				{1,	0,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-				{1,	2,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	2,	1},
-				{1,	0,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-				{1,	6,	0,	0,	0,	0,	7,	0,	0,	8,	0,	0,	9,	0,	0,	10,	0,	0,	11,	0,	0,	12,	0,	0,	0,	0,	13,	1},
-				{1,	0,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-				{1,	0,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-				{1,	14,	0,	0,	0,	0,	15,	1,	1,	16,	0,	0,	17,	1,	1,	18,	0,	0,	19,	1,	1,	20,	0,	0,	0,	0,	21,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	22,	0,	0,	23,	3,	3,	24,	0,	0,	25,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	3,	3,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	20,	20,	20,	20,	20,	20,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	0,	0,	0,	0,	0,	26,	0,	0,	27,	1,	20,	20,	20,	20,	20,	20,	1,	28,	0,	0,	29,	0,	0,	0,	0,	0,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	20,	20,	20,	20,	20,	20,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	30,	0,	0,	0,	0,	0,	0,	0,	0,	31,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1},
-				{1,	32,	0,	0,	0,	0,	33,	0,	0,	34,	0,	0,	35,	1,	1,	36,	0,	0,	37,	0,	0,	38,	0,	0,	0,	0,	39,	1},
-				{1,	0,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	0,	1},
-				{1,	2,	1,	1,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	0,	1,	1,	1,	1,	2,	1},
-				{1,	40,	0,	41,	1,	1,	42,	0,	0,	43,	0,	0,	44,	0,	0,	45,	0,	0,	46,	0,	0,	47,	1,	1,	48,	0,	49,	1},
-				{1,	1,	1,	0,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	0,	1,	1,	1},
-				{1,	1,	1,	0,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	0,	1,	1,	1},
-				{1,	50,	0,	51,	0,	0,	52,	1,	1,	53,	0,	0,	54,	1,	1,	55,	0,	0,	56,	1,	1,	57,	0,	0,	58,	0,	59,	1},
-				{1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1},
-				{1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1,	1,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	0,	1},
-				{1,	60,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	61,	0,	0,	62,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	63,	1},
-				{1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1},
 
-		};
-		
-		numeroVortice = mapa[x][y];
-		
-		return numeroVortice;
-		
-		
-		
-	}
-
-	
-	
-	
-	public void pruebaComparar2() {
-		
-		
-		
-	}
 	
 	
 	

@@ -20,6 +20,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.SynchronousQueue;
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 public class Pacman {
 
 	/**
@@ -44,6 +47,7 @@ public class Pacman {
 	static ArrayList<EntradaRanking> ranking = new ArrayList<>();
 	static String nom = "player";
 	static int punts = 0;
+	static String nombre="";
 	
 	
 	private static int[][] iniciaMapa() {
@@ -108,13 +112,22 @@ public class Pacman {
 	
 	public static void fin() {
 		if (fin) {
-			timer.cancel();	
 			System.out.println("GAME OVER");
 			System.out.println("PUNTOS TOTALES: " +punts);
 			guardarRanking();
+			timer.cancel();	
+			fin2();
 		}
 	}
 	
+	private static void fin2() {
+		
+		JOptionPane.showMessageDialog(null, "¡GAME OVER! PUNTOS TOTALES:\n"+"                      "+ punts);
+		
+	}
+
+
+
 	private static void ponerGraficos() {
 		t.setActcolors(false); //ya no quiero colores
         t.setActimatges(true); 
@@ -149,7 +162,7 @@ public class Pacman {
         "pacmanAB.png",//32
         "ojosD.png",//33
         "ojosI.png",//34
-        "puntop.png",//35
+        "cherry.png",//35
         
         };
         
@@ -169,12 +182,12 @@ public class Pacman {
 			for (int j=0;j<columnas;j++) {
 				//-18
 				if(Pacman.mapa[i][j]==20) {
-					calpunts++;
+					calpunts+=20;
 				}
 			}
 		}
 		
-		return calpunts-18;
+		return calpunts-360;
 	}
 	
 	private static void leeRanking() {
@@ -332,12 +345,13 @@ public class Pacman {
 		player1.setComebola(false);
 		punts=calculapunts()+Catman.puntos;
 		System.out.println(punts);
+		t.dibuixa(MapaFantasmas.mapaF);
 		fin();
 		//long endTime = System.currentTimeMillis();
 		//long time = endTime-startTime;
 		//System.out.println("tiempo de Jessica "+time);
 		//long dstartTime = System.currentTimeMillis();
-		t.dibuixa(MapaFantasmas.mapaF);
+		
 		
 		//t.overdibuixa(MapaFantasmas.mapaF);
 		//long dendTime = System.currentTimeMillis();
@@ -354,31 +368,45 @@ public class Pacman {
 
 	public static void main(String[] args) throws Throwable {
 		
-		datos();
-		initThings();			
-		ponerGraficos();
-        timer.schedule(new TimerTask()
-        		
-        {
-            @Override
-            public void run() 
-            {          	
-            	fun();
-        
-            }			
-        },
-        0,
-       900);      
+		
+		int estado;
+		
+		estado = Integer.parseInt(JOptionPane.showInputDialog("Menu\n1. PLAY\n2.CLOSE"));
+		
+		switch (estado) {
+		
+		case 1:
+			 nombre = JOptionPane.showInputDialog("nombre");
+					datos();
+			JOptionPane.showMessageDialog(null, "¡Buena suerte "+ nombre +" !");
+			
+					initThings();			
+					ponerGraficos();
+			        timer.schedule(new TimerTask() 
+			        		
+			        {
+			            @Override
+			            public void run() 
+			            {          	
+			            	fun();
+			        
+			            }			
+			        },
+			        0,
+			       900);     
+			break;
+		case 2:
+			JOptionPane.showMessageDialog(null, "BYE");			
+		}
+		
+	
+		
+		
         
 	}
 
-
-
 	private static void datos() {
-		System.out.println("Introduce nombre de jugador");
-		Scanner sc = new Scanner(System.in);
-		nom= sc.next();
-		sc.close();
+		nom= nombre;
 		punts=0;
 		System.out.println("¡Buena suerte "+ nom+"!");
 		
